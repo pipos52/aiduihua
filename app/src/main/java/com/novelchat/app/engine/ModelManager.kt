@@ -83,14 +83,10 @@ class ModelManager(private val context: Context) {
             listener.onProgress(5, "初始化训练器...")
             val trainer = MarkovTrainer(order = character.order)
 
-            // 加载已存在的模型（增量训练）
-            var model: MarkovModel? = loadModel(character)
-            if (model == null) {
-                model = MarkovModel().also { it.order = character.order }
-            } else if (model.order != character.order) {
-                // 阶数变更：重新训练
-                model = MarkovModel().also { it.order = character.order }
-            }
+            // 加载已存在的模型（增量训练）；从一开始就保证非空
+            var model: MarkovModel = loadModel(character)
+                ?.takeIf { it.order == character.order }
+                ?: MarkovModel().also { it.order = character.order }
 
             val totalChars = text.length
             val chunkSize = 200_000
