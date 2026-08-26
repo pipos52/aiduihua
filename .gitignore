@@ -1,0 +1,28 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Android / IntelliJ
+*.iml
+.idea/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+app/build/
+
+# ProGuard
+proguard-rules.pro
+
+# Mac
+.DS_Store
+
+# Linux
+*~
+
+# APK outputs (keep debug for local testing only)
+app/build/outputs/apk/
+
+# Sandbox
+android-sdk/

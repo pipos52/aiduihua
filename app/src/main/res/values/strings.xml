@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">小说文风聊天</string>
+    <string name="title_chat">文风对话</string>
+    <string name="title_characters">角色管理</string>
+    <string name="hint_input">输入你的话…</string>
+    <string name="btn_send">发送</string>
+    <string name="btn_import">导入TXT</string>
+    <string name="btn_train">训练模型</string>
+    <string name="btn_clear">清空</string>
+    <string name="status_idle">未训练</string>
+    <string name="status_training">训练中… %1$d%%</string>
+    <string name="status_ready">已就绪 (%1$d字 / %2$d句)</string>
+    <string name="welcome_bot">你好，请先创建角色并导入 TXT 小说训练，我才能模仿其文风与你对话。</string>
+    <string name="err_no_file">未选择文件</string>
+    <string name="err_train_failed">训练失败：%1$s</string>
+    <string name="err_file_too_small">文件太小，请选择有效的小说文本</string>
+    <string name="menu_import">导入 TXT 小说</string>
+    <string name="menu_train">训练模型</string>
+    <string name="menu_clear_model">清除模型</string>
+    <string name="menu_clear_chat">清空对话</string>
+    <string name="menu_switch_character">切换角色</string>
+    <string name="menu_continue_train">继续训练（导入TXT）</string>
+    <string name="menu_rename">重命名</string>
+    <string name="menu_delete">删除</string>
+    <string name="dialog_create_title">新建角色</string>
+    <string name="dialog_rename_title">重命名</string>
+    <string name="dialog_delete_title">删除角色</string>
+    <string name="hint_char_name">角色名称</string>
+    <string name="hint_char_desc">角色描述（可选）</string>
+    <string name="label_order">模型阶数（越高越贴合原文）</string>
+</resources>
