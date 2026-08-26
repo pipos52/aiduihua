@@ -48,6 +48,19 @@ class MarkovModel : Serializable {
     val vocabulary: MutableMap<String, Int> = mutableMapOf()
 
     /**
+     * 双字（或双 token）搭配频率表。
+     * 用于生成后校验通顺度：若候选中的连续字组合从未在训练语料中出现过，
+     * 则该候选很可能不通顺，应被扣分/淘汰。
+     * key = 字1 + \u0001 + 字2
+     */
+    val bigramFreq: MutableMap<String, Int> = mutableMapOf()
+
+    /**
+     * 三字（或三 token）搭配频率表。用于更强的通顺度约束。
+     */
+    val trigramFreq: MutableMap<String, Int> = mutableMapOf()
+
+    /**
      * 用户词汇频次：记录用户在与角色对话中使用的词汇分布，
      * 用于让角色"学习"用户的表达习惯（增量训练时填充）。
      */
@@ -100,6 +113,26 @@ class MarkovModel : Serializable {
     fun addUserWord(word: String, weight: Int = 1) {
         userVocabulary[word] = (userVocabulary[word] ?: 0) + weight
     }
+
+    /** 增加双字搭配频次 */
+    fun addBigram(a: String, b: String, weight: Int = 1) {
+        val key = a + KEY_DELIMITER + b
+        bigramFreq[key] = (bigramFreq[key] ?: 0) + weight
+    }
+
+    /** 增加三字搭配频次 */
+    fun addTrigram(a: String, b: String, c: String, weight: Int = 1) {
+        val key = a + KEY_DELIMITER + b + KEY_DELIMITER + c
+        trigramFreq[key] = (trigramFreq[key] ?: 0) + weight
+    }
+
+    /** 查询双字是否见过 */
+    fun hasBigram(a: String, b: String): Boolean =
+        bigramFreq.containsKey(a + KEY_DELIMITER + b)
+
+    /** 查询三字是否见过 */
+    fun hasTrigram(a: String, b: String, c: String): Boolean =
+        trigramFreq.containsKey(a + KEY_DELIMITER + b + KEY_DELIMITER + c)
 
     /** 把句子加入主题倒排索引 */
     fun indexTopicSentence(keyWord: String, sentence: String) {

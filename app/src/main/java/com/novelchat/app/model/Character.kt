@@ -20,8 +20,8 @@ data class Character(
     var trainedChars: Int = 0,
     /** 已训练句数 */
     var trainedSentences: Int = 0,
-    /** 模型阶数 */
-    var order: Int = 3,
+    /** 模型阶数（N-gram）。字级别下 N 越大越通顺；默认 5 是生成连贯中文的一个较优值 */
+    var order: Int = 5,
     /** 记忆的对话轮数（与用户交互的次数） */
     var dialogueTurns: Int = 0
 ) : Serializable {

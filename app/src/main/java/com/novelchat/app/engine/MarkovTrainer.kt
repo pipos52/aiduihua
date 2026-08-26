@@ -20,7 +20,7 @@ import java.util.regex.Pattern
  * 可以在数秒内完成百万字小说训练，无需 GPU。
  */
 class MarkovTrainer(
-    private val order: Int = 3
+    private val order: Int = 5
 ) {
 
     /** 中英文标点句子结束符 */
@@ -174,6 +174,23 @@ class MarkovTrainer(
             val next = padded[i + 1]
             m.addTransition(prefix, next, weight)
             m.addWord(next, weight)
+        }
+
+        // 额外记录 bi-gram / tri-gram 搭配频率（用于通顺度评分）
+        for (i in 0 until padded.size - 1) {
+            val a = padded[i]
+            val b = padded[i + 1]
+            if (a != MarkovModel.SENTENCE_END && b != MarkovModel.SENTENCE_END) {
+                m.addBigram(a, b, weight)
+            }
+        }
+        for (i in 0 until padded.size - 2) {
+            val a = padded[i]
+            val b = padded[i + 1]
+            val c = padded[i + 2]
+            if (a != MarkovModel.SENTENCE_END && b != MarkovModel.SENTENCE_END && c != MarkovModel.SENTENCE_END) {
+                m.addTrigram(a, b, c, weight)
+            }
         }
 
         // 主题倒排索引：把句子挂到其包含的关键词下
