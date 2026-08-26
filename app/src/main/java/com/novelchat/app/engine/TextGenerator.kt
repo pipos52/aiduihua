@@ -268,8 +268,8 @@ class TextGenerator(
             if (cand == lastReply) score -= 8
             cand to score
         }
-        scored.sortByDescending { it.second }
-        return scored.firstOrNull()?.first ?: ""
+        val sorted = scored.sortedByDescending { pair: Pair<String, Int> -> pair.second }
+        return sorted.firstOrNull()?.first ?: ""
     }
 
     /**
